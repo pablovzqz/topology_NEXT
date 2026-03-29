@@ -201,15 +201,17 @@ def build_2d_counts_df(df, DT):
     
     return pd.DataFrame(data)
 
-def build_3d_counts_df(df, DT, DL):
+def build_3d_counts_df(df, DT, DL, rebin=1):
+
+  
     """
     df: DataFrame with columns ['x','y','z','nel']
     DT, DL: parameters to compute Gaussian sigmas in XY and Z
     returns: DataFrame with columns ['x','y','z','counts'], only counts > 0
     """
     # Compute bin sizes based on mean Z
-    bin_xy = np.sqrt(DT**2 * df['z'].mean())
-    bin_z  = np.sqrt(DL**2 * df['z'].mean())
+    bin_xy = rebin*np.sqrt(DT**2 * df['z'].mean())
+    bin_z  = rebin*np.sqrt(DL**2 * df['z'].mean())
 
     # Histogram min/max edges with 5% padding
     x_range = df['x'].max() - df['x'].min()+0.6
@@ -273,15 +275,15 @@ def build_3d_counts_df(df, DT, DL):
     return pd.DataFrame(data)
 
 
-def build_3d_counts_df_ele(df, DT, DL):
+def build_3d_counts_df_ele(df, DT, DL, rebin = 1):
     """
     df: DataFrame with columns ['x','y','z','nel']
     DT, DL: parameters to compute Gaussian sigmas in XY and Z
     returns: DataFrame with columns ['x','y','z','counts'], only counts > 0
     """
     # Compute bin sizes based on mean Z
-    bin_xy = np.sqrt(DT**2 * max(100,df['z'].mean()))
-    bin_z  = np.sqrt(DL**2 * max(100,df['z'].mean()))
+    bin_xy = rebin*np.sqrt(DT**2 * max(100,df['z'].mean()))
+    bin_z  = rebin*np.sqrt(DL**2 * max(100,df['z'].mean()))
 
     # Histogram min/max edges with 5% padding
     x_range = df['x'].max() - df['x'].min()+3*bin_xy

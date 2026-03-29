@@ -5,6 +5,7 @@ from scipy.sparse.csgraph import minimum_spanning_tree
 from scipy.spatial import cKDTree
 from scipy.spatial.distance import pdist, squareform
 from sklearn.decomposition import PCA
+from scipy.stats import gaussian_kde
 
 
 def compute_primary_path(df, thresh):
@@ -1041,7 +1042,6 @@ def cubic_kernel_filter_adaptive_alpha(df, kernel_size=5, alpha_base=0.3, q_perc
 
     return df_out
     
-from scipy.stats import gaussian_kde
 def kde_gradient_filter(df, kernel_size=5, bandwidth=1.0, alpha=0.2):
     """
     KDE-based gradient filter for voxelized 3D point clouds.
